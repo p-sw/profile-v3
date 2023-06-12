@@ -27,6 +27,8 @@ jobs:
           node-version: 20.2.0
       - name: Build React
         run: yarn build
+      - name: Add CNAME
+        run: echo ritonis.me > ./dist/CNAME
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
