@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import {
   Flex,
   Link,
@@ -6,7 +6,6 @@ import {
   useColorMode,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useSize } from "react-use";
 import {
   HamburgerIcon,
   CloseIcon,
@@ -80,34 +79,7 @@ const Navigation: FC = () => {
   const navHeight = useBreakpointValue({ base: 40, md: 55 }) ?? 40;
   const [onLoad, setOnLoad] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [navDropdown] = useSize(({ height }) => (
-    <Flex
-      direction={"column"}
-      justify={"flex-start"}
-      align={"center"}
-      gap={"25px"}
-      py={"25px"}
-      w={"100vw"}
-      h={"fit-content"}
-      top={isOpen ? 0 : `calc(-${height}px - ${navHeight * 2}px)`}
-      transition={"all 400ms ease-out"}
-      transitionDelay={isOpen ? "100ms" : "0"}
-      bg={"bg"}
-    >
-      <NavItem isMobile={isMobile} href={"/about"}>
-        About
-      </NavItem>
-      <NavItem isMobile={isMobile} href={"/projects"}>
-        Projects
-      </NavItem>
-      <NavItem isMobile={isMobile} href={"/teams"}>
-        Teams
-      </NavItem>
-      <NavItem isMobile={isMobile} href={"/contact"}>
-        Contact
-      </NavItem>
-    </Flex>
-  ));
+  const navDropdownRef = useRef<null | HTMLDivElement>(null);
 
   useEffect(() => {
     setOnLoad(true);
@@ -198,8 +170,8 @@ const Navigation: FC = () => {
       {isMobile ? (
         <>
           <Flex
-            position={"relative"}
-            top={isOpen ? 0 : `-${navHeight * 2}px`}
+            position={"absolute"}
+            top={isOpen ? `${navHeight}px` : 0}
             left={0}
             bgColor={"bg"}
             zIndex={999}
@@ -216,7 +188,41 @@ const Navigation: FC = () => {
             <NavThemeChanger />
             <NavGithubButton />
           </Flex>
-          {navDropdown}
+          <Flex
+            position={"absolute"}
+            direction={"column"}
+            justify={"flex-start"}
+            align={"center"}
+            gap={"25px"}
+            py={"25px"}
+            w={"100vw"}
+            h={"fit-content"}
+            top={
+              isOpen
+                ? `${navHeight * 2}px`
+                : `-${
+                    navDropdownRef.current?.getBoundingClientRect().height ??
+                    10000
+                  }px`
+            }
+            transition={"all 400ms ease-out"}
+            transitionDelay={isOpen ? "100ms" : "0"}
+            bg={"bg"}
+            ref={navDropdownRef}
+          >
+            <NavItem isMobile={isMobile} href={"/about"}>
+              About
+            </NavItem>
+            <NavItem isMobile={isMobile} href={"/projects"}>
+              Projects
+            </NavItem>
+            <NavItem isMobile={isMobile} href={"/teams"}>
+              Teams
+            </NavItem>
+            <NavItem isMobile={isMobile} href={"/contact"}>
+              Contact
+            </NavItem>
+          </Flex>
         </>
       ) : null}
     </Flex>
