@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import Root from "./Root";
 import Index from "@r/Index";
+import About from "@r/about";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./error";
@@ -12,7 +13,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <Root />,
     errorElement: <ErrorPage />,
-    children: [{ index: true, element: <Index /> }],
+    children: [
+      { index: true, element: <Index /> },
+      { path: "about", element: <About /> },
+    ],
   },
 ]);
 
