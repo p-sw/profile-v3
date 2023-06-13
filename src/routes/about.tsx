@@ -13,6 +13,7 @@ import {
   CardHeader,
   CardBody,
   Heading,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 
@@ -31,9 +32,10 @@ const AboutCard: FC<AboutCardProps> = ({
   lastRef,
   color = "#0088ff",
 }) => {
+  const bgColor = useColorModeValue("#ffffff", "#000000");
   return (
     <Box
-      bg={"#ffffff"}
+      bg={bgColor}
       w={"280px"}
       h={"150px"}
       position={"relative"}
@@ -87,21 +89,20 @@ const PaginatorControl: FC<PaginatorControlProps> = ({
   index,
   overflow,
 }) => {
+  const bgColor = useColorModeValue("#ffffff", "#000000");
   return (
     <>
       <Flex
         position={"absolute"}
         top={"5px"}
-        left={0}
+        left={!overflow || index === 0 ? "-30px" : 0}
         w={"30px"}
         h={"150px"}
         zIndex={1}
-        bg={"linear-gradient(to left, #ffffff00, #ffffffff)"}
+        bg={`linear-gradient(to left, ${bgColor}00, ${bgColor}ff)`}
         justify={"center"}
         align={"center"}
-        opacity={!overflow || index === 0 ? 0 : 1}
-        transition={"opacity 100ms ease-out"}
-        pointerEvents={!overflow || index === 0 ? "none" : "all"}
+        transition={"all 100ms ease-out"}
         onClick={onBack}
       >
         <ArrowBackIcon w={"30px"} h={"30px"} />
@@ -109,16 +110,16 @@ const PaginatorControl: FC<PaginatorControlProps> = ({
       <Flex
         position={"absolute"}
         top={"5px"}
-        left={"calc(100vw - 30px)"}
+        left={
+          !overflow || index === maxLength - 1 ? "100vw" : "calc(100vw - 30px)"
+        }
         w={"30px"}
         h={"150px"}
         zIndex={1}
-        bg={"linear-gradient(to right, #ffffff00, #ffffffff)"}
+        bg={`linear-gradient(to right, ${bgColor}00, ${bgColor}ff)`}
         justify={"center"}
         align={"center"}
-        opacity={!overflow || index === maxLength - 1 ? 0 : 1}
-        transition={"opacity 100ms ease-out"}
-        pointerEvents={!overflow || index === maxLength - 1 ? "none" : "all"}
+        transition={"all 100ms ease-out"}
         onClick={onFront}
       >
         <ArrowForwardIcon w={"30px"} h={"30px"} />
@@ -130,13 +131,17 @@ const PaginatorControl: FC<PaginatorControlProps> = ({
 const About: FC = () => {
   const [index, setIndex] = useState(0);
   const [overflow, setOverflowState] = useState(false);
+  const firstCardRef = useRef<null | HTMLDivElement>(null);
   const lastCardRef = useRef<null | HTMLDivElement>(null);
 
   useEffect(() => {
     window.addEventListener("resize", () => {
       if (
-        lastCardRef.current &&
-        lastCardRef.current.getBoundingClientRect().right > window.innerWidth
+        (lastCardRef.current &&
+          lastCardRef.current.getBoundingClientRect().right >
+            window.innerWidth) ||
+        (firstCardRef.current &&
+          firstCardRef.current.getBoundingClientRect().left < 0)
       ) {
         setOverflowState(true);
       } else {
@@ -146,14 +151,19 @@ const About: FC = () => {
   }, []);
 
   useEffect(() => {
-    if (
-      lastCardRef.current &&
-      lastCardRef.current.getBoundingClientRect().right > window.innerWidth
-    ) {
-      setOverflowState(true);
-    } else {
-      setOverflowState(false);
-    }
+    setTimeout(() => {
+      if (
+        (lastCardRef.current &&
+          lastCardRef.current.getBoundingClientRect().right >
+            window.innerWidth) ||
+        (firstCardRef.current &&
+          firstCardRef.current.getBoundingClientRect().left < 0)
+      ) {
+        setOverflowState(true);
+      } else {
+        setOverflowState(false);
+      }
+    }, 200);
   }, [index]);
 
   return (
@@ -187,19 +197,17 @@ const About: FC = () => {
         position={"relative"}
       >
         <PaginatorControl
-          onFront={() => {
-            setIndex((i) => i + 1);
-            console.log("front");
-          }}
-          onBack={() => {
-            setIndex((i) => i - 1);
-            console.log("back");
-          }}
+          onFront={() => setIndex((i) => i + 1)}
+          onBack={() => setIndex((i) => i - 1)}
           maxLength={2}
           index={index}
           overflow={overflow}
         />
-        <AboutCard title={"Introduction"} currentIndex={index}>
+        <AboutCard
+          title={"Introduction"}
+          currentIndex={index}
+          lastRef={firstCardRef}
+        >
           I'm living in South Korea, Learning web development skills. Currently,
           I mainly write my app in Python & TypeScript (or JavaScript).
         </AboutCard>
