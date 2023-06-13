@@ -21,6 +21,7 @@ type AboutCardProps = {
   children: ReactNode;
   currentIndex: number;
   lastRef?: MutableRefObject<null | HTMLDivElement>;
+  color?: string;
 };
 
 const AboutCard: FC<AboutCardProps> = ({
@@ -28,6 +29,7 @@ const AboutCard: FC<AboutCardProps> = ({
   children,
   currentIndex,
   lastRef,
+  color = "#0088ff",
 }) => {
   return (
     <Box
@@ -45,9 +47,7 @@ const AboutCard: FC<AboutCardProps> = ({
         h={"150px"}
         px={"15px"}
         py={"10px"}
-        bg={
-          "radial-gradient(circle at left top, rgba(0,136,255,0.35) 0%, #0088ff 100%)"
-        }
+        bg={`radial-gradient(circle at left top, ${color}46 0%, ${color}ff 100%)`}
       >
         <CardHeader
           p={0}
@@ -199,17 +199,17 @@ const About: FC = () => {
           index={index}
           overflow={overflow}
         />
-        <AboutCard title={"Lorem Ipsum"} currentIndex={index}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-          auctor, massa eu accumsan efficitur, lacus nibh.
+        <AboutCard title={"Introduction"} currentIndex={index}>
+          I'm living in South Korea, Learning web development skills. Currently,
+          I mainly write my app in Python & TypeScript (or JavaScript).
         </AboutCard>
         <AboutCard
-          title={"Lorem Ipsum"}
+          title={"My Skill"}
           currentIndex={index}
           lastRef={lastCardRef}
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-          auctor, massa eu accumsan efficitur, lacus nibh.
+          Mainly using Python & TypeScript (or JavaScript). Since I fall in love
+          with frontend frameworks, I use TypeScript a lot.
         </AboutCard>
       </Flex>
     </Flex>
