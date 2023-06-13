@@ -134,13 +134,6 @@ const About: FC = () => {
 
   useEffect(() => {
     window.addEventListener("resize", () => {
-      if (lastCardRef.current) {
-        console.log(
-          lastCardRef.current.getBoundingClientRect().right,
-          window.innerWidth,
-          overflow
-        );
-      }
       if (
         lastCardRef.current &&
         lastCardRef.current.getBoundingClientRect().right > window.innerWidth
@@ -153,13 +146,6 @@ const About: FC = () => {
   }, []);
 
   useEffect(() => {
-    if (lastCardRef.current) {
-      console.log(
-        lastCardRef.current.getBoundingClientRect().right,
-        window.innerWidth,
-        overflow
-      );
-    }
     if (
       lastCardRef.current &&
       lastCardRef.current.getBoundingClientRect().right > window.innerWidth
