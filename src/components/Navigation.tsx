@@ -68,7 +68,9 @@ const NavGithubButton: FC = () => {
     <NudeIconButton
       aria-label={"github"}
       icon={<Icon as={IoLogoGithub} />}
-      onClick={() => alert("github!")}
+      onClick={() =>
+        (window.location.href = "https://github.com/ritonis/profile-v3")
+      }
     />
   );
 };
