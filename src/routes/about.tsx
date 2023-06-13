@@ -1,4 +1,11 @@
-import { FC, ReactNode, useState } from "react";
+import {
+  FC,
+  MutableRefObject,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   Box,
   Flex,
@@ -13,9 +20,15 @@ type AboutCardProps = {
   title: string;
   children: ReactNode;
   currentIndex: number;
+  lastRef?: MutableRefObject<null | HTMLDivElement>;
 };
 
-const AboutCard: FC<AboutCardProps> = ({ title, children, currentIndex }) => {
+const AboutCard: FC<AboutCardProps> = ({
+  title,
+  children,
+  currentIndex,
+  lastRef,
+}) => {
   return (
     <Box
       bg={"#ffffff"}
@@ -25,6 +38,7 @@ const AboutCard: FC<AboutCardProps> = ({ title, children, currentIndex }) => {
       top={0}
       left={`${280 * -currentIndex}px`}
       transition={"all 350ms cubic-bezier(.2,.65,.5,1)"}
+      ref={lastRef}
     >
       <Card
         w={"280px"}
@@ -63,6 +77,7 @@ type PaginatorControlProps = {
   onBack: () => void;
   maxLength: number;
   index: number;
+  overflow: boolean;
 };
 
 const PaginatorControl: FC<PaginatorControlProps> = ({
@@ -70,6 +85,7 @@ const PaginatorControl: FC<PaginatorControlProps> = ({
   onBack,
   maxLength,
   index,
+  overflow,
 }) => {
   return (
     <>
@@ -83,9 +99,9 @@ const PaginatorControl: FC<PaginatorControlProps> = ({
         bg={"linear-gradient(to left, #ffffff00, #ffffffff)"}
         justify={"center"}
         align={"center"}
-        opacity={index === 0 ? 0 : 1}
+        opacity={!overflow || index === 0 ? 0 : 1}
         transition={"opacity 100ms ease-out"}
-        pointerEvents={index === 0 ? "none" : "all"}
+        pointerEvents={!overflow || index === 0 ? "none" : "all"}
         onClick={onBack}
       >
         <ArrowBackIcon w={"30px"} h={"30px"} />
@@ -100,9 +116,9 @@ const PaginatorControl: FC<PaginatorControlProps> = ({
         bg={"linear-gradient(to right, #ffffff00, #ffffffff)"}
         justify={"center"}
         align={"center"}
-        opacity={index === maxLength - 1 ? 0 : 1}
+        opacity={!overflow || index === maxLength - 1 ? 0 : 1}
         transition={"opacity 100ms ease-out"}
-        pointerEvents={index === maxLength - 1 ? "none" : "all"}
+        pointerEvents={!overflow || index === maxLength - 1 ? "none" : "all"}
         onClick={onFront}
       >
         <ArrowForwardIcon w={"30px"} h={"30px"} />
@@ -113,7 +129,46 @@ const PaginatorControl: FC<PaginatorControlProps> = ({
 
 const About: FC = () => {
   const [index, setIndex] = useState(0);
-  console.log(index);
+  const [overflow, setOverflowState] = useState(false);
+  const lastCardRef = useRef<null | HTMLDivElement>(null);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      if (lastCardRef.current) {
+        console.log(
+          lastCardRef.current.getBoundingClientRect().right,
+          window.innerWidth,
+          overflow
+        );
+      }
+      if (
+        lastCardRef.current &&
+        lastCardRef.current.getBoundingClientRect().right > window.innerWidth
+      ) {
+        setOverflowState(true);
+      } else {
+        setOverflowState(false);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (lastCardRef.current) {
+      console.log(
+        lastCardRef.current.getBoundingClientRect().right,
+        window.innerWidth,
+        overflow
+      );
+    }
+    if (
+      lastCardRef.current &&
+      lastCardRef.current.getBoundingClientRect().right > window.innerWidth
+    ) {
+      setOverflowState(true);
+    } else {
+      setOverflowState(false);
+    }
+  }, [index]);
 
   return (
     <Flex
@@ -146,16 +201,27 @@ const About: FC = () => {
         position={"relative"}
       >
         <PaginatorControl
-          onFront={() => setIndex((i) => i + 1)}
-          onBack={() => setIndex((i) => i - 1)}
+          onFront={() => {
+            setIndex((i) => i + 1);
+            console.log("front");
+          }}
+          onBack={() => {
+            setIndex((i) => i - 1);
+            console.log("back");
+          }}
           maxLength={2}
           index={index}
+          overflow={overflow}
         />
         <AboutCard title={"Lorem Ipsum"} currentIndex={index}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
           auctor, massa eu accumsan efficitur, lacus nibh.
         </AboutCard>
-        <AboutCard title={"Lorem Ipsum"} currentIndex={index}>
+        <AboutCard
+          title={"Lorem Ipsum"}
+          currentIndex={index}
+          lastRef={lastCardRef}
+        >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
           auctor, massa eu accumsan efficitur, lacus nibh.
         </AboutCard>
