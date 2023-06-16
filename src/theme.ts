@@ -51,22 +51,22 @@ const theme = extendTheme({
     },
     categorytitle: {
       fontFamily: "'poppins'",
-      fontWeight: 600,
+      fontWeight: 'semibold',
       fontSize: '28px',
     },
     categoryitem: {
       fontFamily: "'poppins'",
-      fontWeight: 300,
+      fontWeight: 'light',
       fontSize: '16px',
     },
     navitem: {
       fontFamily: "'poppins'",
-      fontWeight: 500,
+      fontWeight: 'medium',
       fontSize: '18px',
     },
     navitempc: {
       fontFamily: "'poppins'",
-      fontWeight: 300,
+      fontWeight: 'light',
       fontSize: '20px',
     },
   },
