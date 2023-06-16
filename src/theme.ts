@@ -69,6 +69,11 @@ const theme = extendTheme({
       fontWeight: 'light',
       fontSize: '20px',
     },
+    aboutitem: {
+      fontFamily: "'poppins'",
+      fontWeight: 'light',
+      fontSize: '20px',
+    },
   },
   fontWeight: {
     thin: 100,
