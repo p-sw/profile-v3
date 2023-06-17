@@ -3,6 +3,11 @@ import { extendTheme } from '@chakra-ui/react';
 const theme = extendTheme({
   semanticTokens: {
     colors: {
+      realbg: {
+        default: '#ffffff',
+        _light: '#ffffff',
+        _dark: '#1A202C',
+      },
       bg: {
         default: '#f4f4ee',
         _light: '#f4f4ee',
