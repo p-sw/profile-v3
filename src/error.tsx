@@ -1,6 +1,6 @@
-import { useRouteError } from "react-router-dom";
-import { FC } from "react";
-import { Box, Flex } from "@chakra-ui/react";
+import { useRouteError } from 'react-router-dom';
+import { FC } from 'react';
+import { Box, Flex } from '@chakra-ui/react';
 
 const ErrorPage: FC = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -9,17 +9,31 @@ const ErrorPage: FC = () => {
 
   return (
     <Flex
-      direction={"column"}
-      justify={"center"}
-      align={"center"}
-      gap={"50px"}
-      h={"100vh"}
-      w={"100vw"}
+      direction={'column'}
+      justify={'center'}
+      align={'center'}
+      gap={'50px'}
+      h={'100vh'}
+      w={'100vw'}
     >
-      <Box as={"h1"} textStyle={"poppins"} fontWeight={"800"} fontSize={"48px"}>
+      <Box
+        as={'h1'}
+        textStyle={'poppins'}
+        fontWeight={'800'}
+        fontSize={'48px'}
+        w="full"
+        textAlign="center"
+      >
         {error.status}: {error.statusText}
       </Box>
-      <Box as={"p"} textStyle={"poppins"} fontWeight={"500"} fontSize={"20px"}>
+      <Box
+        as={'p'}
+        textStyle={'poppins'}
+        fontWeight={'500'}
+        fontSize={'20px'}
+        w="full"
+        textAlign="center"
+      >
         Instead, I have a little gift for you.
       </Box>
       <iframe
