@@ -24,7 +24,7 @@ import {
   BoxProps,
 } from '@chakra-ui/react';
 
-interface ProjectCardProps extends BoxProps {
+export interface ProjectCardProps extends BoxProps {
   title: string;
   children: ReactNode;
   currentIndex?: number;
