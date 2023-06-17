@@ -157,6 +157,23 @@ const PaginatorControl: FC<PaginatorControlProps> = ({
   );
 };
 
+const ProjectCardContainer: FC<{ children: ReactNode }> = ({ children }) => {
+  return (
+    <Flex
+      direction={'row'}
+      wrap={'nowrap'}
+      justify={'flex-start'}
+      align={'center'}
+      w={'fit-content'}
+      px={'10px'}
+      py={'5px'}
+      gap={'10px'}
+      position={'relative'}
+    >
+      {children}
+    </Flex>
+  );
+};
 /*
 
 Usage
@@ -188,4 +205,4 @@ Usage
 
 */
 
-export { ProjectCard, PaginatorControl };
+export { ProjectCard, PaginatorControl, ProjectCardContainer };
