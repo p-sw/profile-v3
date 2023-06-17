@@ -80,6 +80,11 @@ const About: FC = () => {
       justify={'flex-start'}
       gap={'10px'}
     >
+      <style>{`
+        html,body,#root {
+          overflow-y: hidden;
+        }
+      `}</style>
       <BlinkDownArrow
         position="absolute"
         bottom="0px"
