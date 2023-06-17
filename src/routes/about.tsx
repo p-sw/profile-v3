@@ -88,7 +88,7 @@ const About: FC = () => {
       `}</style>
       <BlinkDownArrow
         position="absolute"
-        bottom="0px"
+        top="calc(100svh - 20px - 55px)"
         left="calc(50vw - 25px)"
         zIndex="2"
         opacity={currentIndex === 0 ? '1' : '0'}
