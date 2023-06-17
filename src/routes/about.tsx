@@ -25,6 +25,7 @@ function AboutItem({ children, currentIndex, myIndex }: AboutItemProps) {
         } ${color}`,
       }}
       transition="all 500ms ease-out"
+      textAlign="center"
     >
       {children}
     </Box>
