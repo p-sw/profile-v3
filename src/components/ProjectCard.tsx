@@ -229,6 +229,13 @@ const ProjectCardContainerFC: FC<{
   const firstCardRef = useRef<HTMLDivElement>(null);
   const lastCardRef = useRef<HTMLDivElement>(null);
 
+  function addIndex() {
+    setIndex((i) => (i < Children.count(children) - 1 ? i + 1 : i));
+  }
+  function subIndex() {
+    setIndex((i) => (i > 0 ? i - 1 : i));
+  }
+
   return (
     <Flex
       className={className}
@@ -241,10 +248,17 @@ const ProjectCardContainerFC: FC<{
       gap={'10px'}
       position={'relative'}
       boxSizing="content-box"
+      onWheel={(event) => {
+        if (event.deltaY > 50) {
+          addIndex();
+        } else if (event.deltaY < -50) {
+          subIndex();
+        }
+      }}
     >
       <PaginatorControl
-        onFront={() => setIndex((i) => i + 1)}
-        onBack={() => setIndex((i) => i - 1)}
+        onFront={() => addIndex()}
+        onBack={() => subIndex()}
         maxLength={Children.count(children) - 1}
         index={index}
         firstCardRef={firstCardRef}
