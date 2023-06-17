@@ -12,41 +12,65 @@ import {
   ReactElement,
 } from 'react';
 import { ArrowForwardIcon, ArrowBackIcon } from '@chakra-ui/icons';
+import { IoLogoGithub } from 'react-icons/io';
+import { IoGlobeOutline } from 'react-icons/io5';
 import {
   useColorModeValue,
-  Box,
   Card,
   CardHeader,
   CardBody,
   Flex,
   chakra,
   BoxProps,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerHeader,
+  DrawerBody,
+  DrawerFooter,
+  useDisclosure,
+  Icon,
 } from '@chakra-ui/react';
 
 export interface ProjectCardProps extends BoxProps {
   title: string;
+  subtitle: string;
   children: ReactNode;
+  github?: string;
+  web?: string;
   currentIndex?: number;
   customRef?: Ref<HTMLDivElement>;
 }
 
 const ProjectCard: FC<ProjectCardProps> = ({
   title,
+  subtitle,
   children,
+  github,
+  web,
   currentIndex,
   customRef,
 }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
-    <Box
-      w={'260px'}
-      h={'150px'}
-      position={'relative'}
-      top={0}
-      left={`${270 * -(currentIndex ?? 0)}px`}
-      transition={'all 350ms cubic-bezier(.2,.65,.5,1)'}
-      ref={customRef}
-    >
-      <Card w={'260px'} h={'150px'} px={'15px'} py={'10px'}>
+    <>
+      <Card
+        position={'relative'}
+        top={0}
+        left={`${270 * -(currentIndex ?? 0)}px`}
+        transition={'all 350ms cubic-bezier(.2,.65,.5,1)'}
+        _hover={{ transform: 'scale(1.04)' }}
+        ref={customRef}
+        w={'260px'}
+        minW={'260px'}
+        h={'150px'}
+        px={'15px'}
+        py={'10px'}
+        onClick={onOpen}
+        cursor="pointer"
+      >
         <CardHeader
           p={0}
           textStyle={'poppins'}
@@ -63,10 +87,49 @@ const ProjectCard: FC<ProjectCardProps> = ({
           fontSize={'14px'}
           color={'#ffffff'}
         >
-          {children}
+          {subtitle}
         </CardBody>
       </Card>
-    </Box>
+      <Drawer isOpen={isOpen} placement="bottom" onClose={onClose}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>{title}</DrawerHeader>
+          <DrawerBody>{children}</DrawerBody>
+          {github || web ? (
+            <DrawerFooter
+              display="flex"
+              flexDirection="row"
+              gap="10px"
+              py="8px"
+              h="32px"
+              boxSizing="content-box"
+            >
+              {github ? (
+                <Icon
+                  as={IoLogoGithub}
+                  w="32px"
+                  h="32px"
+                  cursor="pointer"
+                  p="4px"
+                  onClick={() => (window.location.href = github)}
+                />
+              ) : null}
+              {web ? (
+                <Icon
+                  as={IoGlobeOutline}
+                  w="32px"
+                  h="32px"
+                  cursor="pointer"
+                  p="4px"
+                  onClick={() => (window.location.href = web)}
+                />
+              ) : null}
+            </DrawerFooter>
+          ) : null}
+        </DrawerContent>
+      </Drawer>
+    </>
   );
 };
 
