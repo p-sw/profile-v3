@@ -1,21 +1,21 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from 'react';
 import {
   Flex,
   Link,
   useBreakpointValue,
   useColorMode,
   useDisclosure,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 import {
   HamburgerIcon,
   CloseIcon,
   MoonIcon,
   SunIcon,
   Icon,
-} from "@chakra-ui/icons";
-import { NudeIcon, NudeIconButton } from "./NudeIconButton";
-import { IoLogoGithub } from "react-icons/io";
-import { Link as ReactLink } from "react-router-dom";
+} from '@chakra-ui/icons';
+import { NudeIcon, NudeIconButton } from './NudeIconButton';
+import { IoLogoGithub } from 'react-icons/io';
+import { Link as ReactLink } from 'react-router-dom';
 
 type NavItemProps = {
   children: string;
@@ -27,8 +27,8 @@ const NavItem: FC<NavItemProps> = ({ children, isMobile, href }) => {
   return (
     <Link
       as={ReactLink}
-      textStyle={isMobile ? "navitem" : "navitempc"}
-      color={"secondary"}
+      textStyle={isMobile ? 'navitem' : 'navitempc'}
+      color={'secondary'}
       to={href}
     >
       {children}
@@ -39,23 +39,23 @@ const NavItem: FC<NavItemProps> = ({ children, isMobile, href }) => {
 const NavThemeChanger: FC = () => {
   const { colorMode, setColorMode } = useColorMode();
 
-  if (colorMode === "light") {
+  if (colorMode === 'light') {
     return (
       <NudeIconButton
-        aria-label={"light mode"}
+        aria-label={'light mode'}
         icon={<NudeIcon Iconval={SunIcon} />}
         onClick={() => {
-          setColorMode("dark");
+          setColorMode('dark');
         }}
       />
     );
   } else {
     return (
       <NudeIconButton
-        aria-label={"dark mode"}
+        aria-label={'dark mode'}
         icon={<NudeIcon Iconval={MoonIcon} />}
         onClick={() => {
-          setColorMode("light");
+          setColorMode('light');
         }}
       />
     );
@@ -65,10 +65,10 @@ const NavThemeChanger: FC = () => {
 const NavGithubButton: FC = () => {
   return (
     <NudeIconButton
-      aria-label={"github"}
+      aria-label={'github'}
       icon={<Icon as={IoLogoGithub} />}
       onClick={() =>
-        (window.location.href = "https://github.com/ritonis/profile-v3")
+        (window.location.href = 'https://github.com/ritonis/profile-v3')
       }
     />
   );
@@ -87,64 +87,58 @@ const Navigation: FC = () => {
 
   return (
     <Flex
-      direction={"column"}
-      justify={"flex-start"}
-      align={"flex-start"}
-      position={"fixed"}
+      direction={'column'}
+      justify={'flex-start'}
+      align={'flex-start'}
+      position={'fixed'}
       top={0}
       left={0}
-      w={"100vw"}
-      h={"fit-content"}
+      w={'100vw'}
+      h={'fit-content'}
       zIndex={1000}
     >
       <Flex
-        position={"relative"}
-        direction={"row"}
-        justify={"space-between"}
-        align={"center"}
-        px={"25px"}
+        position={'relative'}
+        direction={'row'}
+        justify={'space-between'}
+        align={'center'}
+        px={'25px'}
         h={`${navHeight}px`}
-        w={"100vw"}
+        w={'100vw'}
         zIndex={1000}
         top={onLoad ? 0 : `-${navHeight}px`}
         left={0}
-        transition={"all 200ms ease-out"}
-        bgColor={"bg"}
+        transition={'all 200ms ease-out'}
+        bgColor={'bg'}
       >
         <Link
           as={ReactLink}
-          textStyle={"poppins"}
+          textStyle={'poppins'}
           fontWeight={300}
-          fontSize={["18px", null, "30px"]}
+          fontSize={['18px', null, '30px']}
         >
           Ritonis
         </Link>
         {!isMobile ? (
           <Flex
-            direction={"row"}
-            justify={"flex-start"}
-            align={"center"}
-            px={"5px"}
-            gap={"10px"}
+            direction={'row'}
+            justify={'flex-start'}
+            align={'center'}
+            px={'5px'}
+            gap={'10px'}
           >
-            <NavItem isMobile={isMobile} href={"/about"}>
+            <NavItem isMobile={isMobile} href={'/about'}>
               About
             </NavItem>
-            <NavItem isMobile={isMobile} href={"/projects"}>
+            <NavItem isMobile={isMobile} href={'/projects'}>
               Projects
             </NavItem>
-            <NavItem isMobile={isMobile} href={"/teams"}>
-              Teams
-            </NavItem>
-            <NavItem isMobile={isMobile} href={"/contact"}>
-              Contact
-            </NavItem>
             <Flex
-              direction={"row"}
-              justify={"flex-start"}
-              align={"center"}
-              px={"15px"}
-              gap={"10px"}
+              direction={'row'}
+              justify={'flex-start'}
+              align={'center'}
+              px={'15px'}
+              gap={'10px'}
             >
               <NavThemeChanger />
               <NavGithubButton />
@@ -154,14 +148,14 @@ const Navigation: FC = () => {
         {isMobile ? (
           isOpen ? (
             <NudeIconButton
-              aria-label={"Close"}
-              icon={<NudeIcon Iconval={CloseIcon} w={"20px"} h={"20px"} />}
+              aria-label={'Close'}
+              icon={<NudeIcon Iconval={CloseIcon} w={'20px'} h={'20px'} />}
               onClick={onClose}
             />
           ) : (
             <NudeIconButton
-              aria-label={"Open"}
-              icon={<NudeIcon Iconval={HamburgerIcon} w={"30px"} h={"30px"} />}
+              aria-label={'Open'}
+              icon={<NudeIcon Iconval={HamburgerIcon} w={'30px'} h={'30px'} />}
               onClick={onOpen}
             />
           )
@@ -170,33 +164,33 @@ const Navigation: FC = () => {
       {isMobile ? (
         <>
           <Flex
-            position={"absolute"}
+            position={'absolute'}
             top={isOpen ? `${navHeight}px` : 0}
             left={0}
-            bgColor={"bg"}
+            bgColor={'bg'}
             zIndex={999}
-            direction={"row"}
-            justify={"flex-end"}
-            align={"center"}
-            px={"15px"}
-            gap={"5px"}
-            w={"100vw"}
+            direction={'row'}
+            justify={'flex-end'}
+            align={'center'}
+            px={'15px'}
+            gap={'5px'}
+            w={'100vw'}
             h={`${navHeight}px`}
-            transition={"all 200ms ease-out"}
-            transitionDelay={isOpen ? "0" : "300ms"}
+            transition={'all 200ms ease-out'}
+            transitionDelay={isOpen ? '0' : '300ms'}
           >
             <NavThemeChanger />
             <NavGithubButton />
           </Flex>
           <Flex
-            position={"absolute"}
-            direction={"column"}
-            justify={"flex-start"}
-            align={"center"}
-            gap={"25px"}
-            py={"25px"}
-            w={"100vw"}
-            h={"fit-content"}
+            position={'absolute'}
+            direction={'column'}
+            justify={'flex-start'}
+            align={'center'}
+            gap={'25px'}
+            py={'25px'}
+            w={'100vw'}
+            h={'fit-content'}
             top={
               isOpen
                 ? `${navHeight * 2}px`
@@ -205,22 +199,16 @@ const Navigation: FC = () => {
                     10000
                   }px`
             }
-            transition={"all 400ms ease-out"}
-            transitionDelay={isOpen ? "100ms" : "0"}
-            bg={"bg"}
+            transition={'all 400ms ease-out'}
+            transitionDelay={isOpen ? '100ms' : '0'}
+            bg={'bg'}
             ref={navDropdownRef}
           >
-            <NavItem isMobile={isMobile} href={"/about"}>
+            <NavItem isMobile={isMobile} href={'/about'}>
               About
             </NavItem>
-            <NavItem isMobile={isMobile} href={"/projects"}>
+            <NavItem isMobile={isMobile} href={'/projects'}>
               Projects
-            </NavItem>
-            <NavItem isMobile={isMobile} href={"/teams"}>
-              Teams
-            </NavItem>
-            <NavItem isMobile={isMobile} href={"/contact"}>
-              Contact
             </NavItem>
           </Flex>
         </>
