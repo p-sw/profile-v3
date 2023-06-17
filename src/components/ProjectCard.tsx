@@ -158,7 +158,7 @@ const PaginatorControl: FC<PaginatorControlProps> = ({
   );
 };
 
-let ProjectCardContainer: FC<{ className: string; children: ReactNode }> = ({
+let ProjectCardContainer: FC<{ className?: string; children: ReactNode }> = ({
   className,
   children,
 }) => {
