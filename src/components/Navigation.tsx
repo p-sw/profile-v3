@@ -21,15 +21,17 @@ type NavItemProps = {
   children: string;
   isMobile: boolean;
   href: string;
+  navClose: () => void;
 };
 
-const NavItem: FC<NavItemProps> = ({ children, isMobile, href }) => {
+const NavItem: FC<NavItemProps> = ({ navClose, children, isMobile, href }) => {
   return (
     <Link
       as={ReactLink}
       textStyle={isMobile ? 'navitem' : 'navitempc'}
       color={'secondary'}
       to={href}
+      onClick={navClose}
     >
       {children}
     </Link>
@@ -127,10 +129,10 @@ const Navigation: FC = () => {
             px={'5px'}
             gap={'10px'}
           >
-            <NavItem isMobile={isMobile} href={'/about'}>
+            <NavItem isMobile={isMobile} href={'/about'} navClose={onClose}>
               About
             </NavItem>
-            <NavItem isMobile={isMobile} href={'/projects'}>
+            <NavItem isMobile={isMobile} href={'/projects'} navClose={onClose}>
               Projects
             </NavItem>
             <Flex
@@ -204,10 +206,10 @@ const Navigation: FC = () => {
             bg={'bg'}
             ref={navDropdownRef}
           >
-            <NavItem isMobile={isMobile} href={'/about'}>
+            <NavItem isMobile={isMobile} href={'/about'} navClose={onClose}>
               About
             </NavItem>
-            <NavItem isMobile={isMobile} href={'/projects'}>
+            <NavItem isMobile={isMobile} href={'/projects'} navClose={onClose}>
               Projects
             </NavItem>
           </Flex>
