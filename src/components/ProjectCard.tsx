@@ -76,7 +76,7 @@ const ProjectCard: FC<ProjectCardProps> = ({
           textStyle={'poppins'}
           fontWeight={'medium'}
           fontSize={'18px'}
-          color={'#ffffff'}
+          color={'primary'}
         >
           {title}
         </CardHeader>
@@ -85,7 +85,7 @@ const ProjectCard: FC<ProjectCardProps> = ({
           textStyle={'poppins'}
           fontWeight={'light'}
           fontSize={'14px'}
-          color={'#ffffff'}
+          color={'secondary'}
         >
           {subtitle}
         </CardBody>
