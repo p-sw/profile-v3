@@ -158,10 +158,10 @@ const PaginatorControl: FC<PaginatorControlProps> = ({
   );
 };
 
-let ProjectCardContainer: FC<{ className?: string; children: ReactNode }> = ({
-  className,
-  children,
-}) => {
+const ProjectCardContainerFC: FC<{
+  className?: string;
+  children: ReactNode;
+}> = ({ className, children }) => {
   return (
     <Flex
       className={className}
@@ -180,7 +180,7 @@ let ProjectCardContainer: FC<{ className?: string; children: ReactNode }> = ({
   );
 };
 
-ProjectCardContainer = chakra(ProjectCardContainer);
+const ProjectCardContainer = chakra(ProjectCardContainerFC);
 
 /*
 
