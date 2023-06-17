@@ -228,6 +228,10 @@ const ProjectCardContainerFC: FC<{
   const [index, setIndex] = useState<number>(0);
   const firstCardRef = useRef<HTMLDivElement>(null);
   const lastCardRef = useRef<HTMLDivElement>(null);
+  const [swipeState, setSwipeState] = useState<{
+    start: number;
+    deltaX: number;
+  }>({ start: 0, deltaX: 0 });
 
   function addIndex() {
     setIndex((i) => (i < Children.count(children) - 1 ? i + 1 : i));
@@ -252,6 +256,22 @@ const ProjectCardContainerFC: FC<{
         if (event.deltaY > 50) {
           addIndex();
         } else if (event.deltaY < -50) {
+          subIndex();
+        }
+      }}
+      onTouchStart={(event) => {
+        setSwipeState({ start: event.changedTouches[0].screenX, deltaX: 0 });
+      }}
+      onTouchMove={(event) => {
+        setSwipeState((state) => ({
+          start: state.start,
+          deltaX: state.start - event.changedTouches[0].screenX,
+        }));
+      }}
+      onTouchEnd={() => {
+        if (swipeState.deltaX > 60) {
+          addIndex();
+        } else if (swipeState.deltaX < -60) {
           subIndex();
         }
       }}
