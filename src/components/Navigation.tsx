@@ -5,6 +5,7 @@ import {
   useBreakpointValue,
   useColorMode,
   useDisclosure,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
@@ -40,6 +41,13 @@ const NavItem: FC<NavItemProps> = ({ navClose, children, isMobile, href }) => {
 
 const NavThemeChanger: FC = () => {
   const { colorMode, setColorMode } = useColorMode();
+  const themeColor = useColorModeValue('#f4f4ee', '#000000');
+
+  useEffect(() => {
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', themeColor);
+  }, [themeColor]);
 
   if (colorMode === 'light') {
     return (
