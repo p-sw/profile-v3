@@ -104,7 +104,6 @@ const About: FC = () => {
         gap="60px"
         w="full"
         h="full"
-        boxShadow="inset 0px 70px 20px -15px #ffffff, inset 0px -70px 20px -15px #ffffff"
         overflowY="hidden"
         onWheel={(event) => {
           if (event.deltaY > 50) {
