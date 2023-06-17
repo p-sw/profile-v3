@@ -8,6 +8,7 @@ import {
   CardBody,
   Flex,
   Heading,
+  chakra,
 } from '@chakra-ui/react';
 
 type ProjectCardProps = {
@@ -157,9 +158,13 @@ const PaginatorControl: FC<PaginatorControlProps> = ({
   );
 };
 
-const ProjectCardContainer: FC<{ children: ReactNode }> = ({ children }) => {
+let ProjectCardContainer: FC<{ className: string; children: ReactNode }> = ({
+  className,
+  children,
+}) => {
   return (
     <Flex
+      className={className}
       direction={'row'}
       wrap={'nowrap'}
       justify={'flex-start'}
@@ -174,6 +179,9 @@ const ProjectCardContainer: FC<{ children: ReactNode }> = ({ children }) => {
     </Flex>
   );
 };
+
+ProjectCardContainer = chakra(ProjectCardContainer);
+
 /*
 
 Usage
