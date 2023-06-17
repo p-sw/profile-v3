@@ -19,7 +19,6 @@ import {
   CardHeader,
   CardBody,
   Flex,
-  Heading,
   chakra,
   BoxProps,
 } from '@chakra-ui/react';
@@ -28,7 +27,6 @@ export interface ProjectCardProps extends BoxProps {
   title: string;
   children: ReactNode;
   currentIndex?: number;
-  color?: { dark: string; light: string };
   customRef?: Ref<HTMLDivElement>;
 }
 
@@ -36,42 +34,32 @@ const ProjectCard: FC<ProjectCardProps> = ({
   title,
   children,
   currentIndex,
-  color = { light: '#0088ff', dark: '#55bbff' },
   customRef,
 }) => {
-  const bgColor = useColorModeValue('#ffffff', '#000000');
-  const bgTopColor = useColorModeValue(color.light, color.dark);
   return (
     <Box
-      bg={bgColor}
-      w={'280px'}
+      w={'260px'}
       h={'150px'}
       position={'relative'}
       top={0}
-      left={`${290 * -(currentIndex ?? 0)}px`}
+      left={`${270 * -(currentIndex ?? 0)}px`}
       transition={'all 350ms cubic-bezier(.2,.65,.5,1)'}
       ref={customRef}
     >
-      <Card
-        w={'280px'}
-        h={'150px'}
-        px={'15px'}
-        py={'10px'}
-        bg={`radial-gradient(circle at left top, ${bgTopColor}46 0%, ${bgTopColor}ff 100%)`}
-      >
+      <Card w={'260px'} h={'150px'} px={'15px'} py={'10px'}>
         <CardHeader
           p={0}
           textStyle={'poppins'}
-          fontWeight={600}
-          fontSize={'24px'}
+          fontWeight={'medium'}
+          fontSize={'18px'}
           color={'#ffffff'}
         >
-          <Heading>{title}</Heading>
+          {title}
         </CardHeader>
         <CardBody
           p={0}
           textStyle={'poppins'}
-          fontWeight={400}
+          fontWeight={'light'}
           fontSize={'14px'}
           color={'#ffffff'}
         >
@@ -154,7 +142,7 @@ const PaginatorControl: FC<PaginatorControlProps> = ({
       <Flex
         position={'absolute'}
         top={'5px'}
-        right={!overflow || index === maxLength ? '-60px' : '-10px'}
+        right={!overflow || index === maxLength ? '-60px' : '-30px'}
         w={'30px'}
         h={'150px'}
         zIndex={1}
@@ -186,7 +174,6 @@ const ProjectCardContainerFC: FC<{
       justify={'flex-start'}
       align={'flex-start'}
       w={'full'}
-      px={'10px'}
       py={'5px'}
       gap={'10px'}
       position={'relative'}
