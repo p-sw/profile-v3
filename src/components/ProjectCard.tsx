@@ -1,4 +1,16 @@
-import { FC, ReactNode, MutableRefObject, useState, useEffect } from 'react';
+import {
+  FC,
+  ReactNode,
+  MutableRefObject,
+  useState,
+  useEffect,
+  Children,
+  useRef,
+  isValidElement,
+  cloneElement,
+  Ref,
+  ReactElement,
+} from 'react';
 import { ArrowForwardIcon, ArrowBackIcon } from '@chakra-ui/icons';
 import {
   useColorModeValue,
@@ -9,24 +21,26 @@ import {
   Flex,
   Heading,
   chakra,
+  BoxProps,
 } from '@chakra-ui/react';
 
-type ProjectCardProps = {
+interface ProjectCardProps extends BoxProps {
   title: string;
   children: ReactNode;
-  currentIndex: number;
-  lastRef?: MutableRefObject<null | HTMLDivElement>;
-  color?: string;
-};
+  currentIndex?: number;
+  color?: { dark: string; light: string };
+  customRef?: Ref<HTMLDivElement>;
+}
 
 const ProjectCard: FC<ProjectCardProps> = ({
   title,
   children,
   currentIndex,
-  lastRef,
-  color = '#0088ff',
+  color = { light: '#0088ff', dark: '#55bbff' },
+  customRef,
 }) => {
   const bgColor = useColorModeValue('#ffffff', '#000000');
+  const bgTopColor = useColorModeValue(color.light, color.dark);
   return (
     <Box
       bg={bgColor}
@@ -34,16 +48,16 @@ const ProjectCard: FC<ProjectCardProps> = ({
       h={'150px'}
       position={'relative'}
       top={0}
-      left={`${280 * -currentIndex}px`}
+      left={`${290 * -(currentIndex ?? 0)}px`}
       transition={'all 350ms cubic-bezier(.2,.65,.5,1)'}
-      ref={lastRef}
+      ref={customRef}
     >
       <Card
         w={'280px'}
         h={'150px'}
         px={'15px'}
         py={'10px'}
-        bg={`radial-gradient(circle at left top, ${color}46 0%, ${color}ff 100%)`}
+        bg={`radial-gradient(circle at left top, ${bgTopColor}46 0%, ${bgTopColor}ff 100%)`}
       >
         <CardHeader
           p={0}
@@ -125,7 +139,7 @@ const PaginatorControl: FC<PaginatorControlProps> = ({
       <Flex
         position={'absolute'}
         top={'5px'}
-        left={!overflow || index === 0 ? '-30px' : 0}
+        left={!overflow || index === 0 ? '-60px' : '-30px'}
         w={'30px'}
         h={'150px'}
         zIndex={1}
@@ -140,9 +154,7 @@ const PaginatorControl: FC<PaginatorControlProps> = ({
       <Flex
         position={'absolute'}
         top={'5px'}
-        left={
-          !overflow || index === maxLength - 1 ? '100vw' : 'calc(100vw - 30px)'
-        }
+        right={!overflow || index === maxLength ? '-60px' : '-10px'}
         w={'30px'}
         h={'150px'}
         zIndex={1}
@@ -160,22 +172,55 @@ const PaginatorControl: FC<PaginatorControlProps> = ({
 
 const ProjectCardContainerFC: FC<{
   className?: string;
-  children: ReactNode;
+  children: ReactElement<ProjectCardProps> | ReactElement<ProjectCardProps>[];
 }> = ({ className, children }) => {
+  const [index, setIndex] = useState<number>(0);
+  const firstCardRef = useRef<HTMLDivElement>(null);
+  const lastCardRef = useRef<HTMLDivElement>(null);
+
   return (
     <Flex
       className={className}
       direction={'row'}
       wrap={'nowrap'}
       justify={'flex-start'}
-      align={'center'}
-      w={'fit-content'}
+      align={'flex-start'}
+      w={'full'}
       px={'10px'}
       py={'5px'}
       gap={'10px'}
       position={'relative'}
+      boxSizing="content-box"
     >
-      {children}
+      <PaginatorControl
+        onFront={() => setIndex((i) => i + 1)}
+        onBack={() => setIndex((i) => i - 1)}
+        maxLength={Children.count(children) - 1}
+        index={index}
+        firstCardRef={firstCardRef}
+        lastCardRef={lastCardRef}
+      />
+      {Children.map(children, (child, childIndex) => {
+        if (isValidElement<ProjectCardProps>(child)) {
+          if (childIndex === 0 || childIndex === Children.count(children) - 1) {
+            return cloneElement(child, {
+              customRef:
+                childIndex === 0
+                  ? firstCardRef
+                  : childIndex === Children.count(children) - 1
+                  ? lastCardRef
+                  : null,
+              currentIndex: index,
+            });
+          } else {
+            return cloneElement(child, {
+              currentIndex: index,
+            });
+          }
+        } else {
+          return null;
+        }
+      })}
     </Flex>
   );
 };
