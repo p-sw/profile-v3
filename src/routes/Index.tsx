@@ -104,16 +104,8 @@ const Index: FC = () => {
             textDecoration={'underline'}
             bg={'linear-gradient(-25deg, #73e79e, #6323d1)'}
             backgroundClip={'text'}
-            color={'secondary'}
+            color={'transparent'}
             transition={'all 200ms ease-out'}
-            _hover={{
-              color: 'transparent',
-              transition: 'all 200ms ease-out',
-            }}
-            cursor={'pointer'}
-            onClick={() => {
-              window.location.href = 'https://github.com/ritonis';
-            }}
           >
             Shinwoo PARK
           </Box>
