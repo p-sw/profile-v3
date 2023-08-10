@@ -84,7 +84,7 @@ const Index: FC = () => {
           as={'h1'}
           textStyle={'poppins'}
           fontWeight={700}
-          fontSize={{ base: '48px', xl: '64px' }}
+          fontSize={{ base: '48px', md: '64px', lg: '82px', xl: '96px' }}
           userSelect={'none'}
         >
           Hello!
@@ -93,7 +93,7 @@ const Index: FC = () => {
           as={'p'}
           textStyle={'poppins'}
           fontWeight={400}
-          fontSize={{ base: '24px', xl: '32px' }}
+          fontSize={{ base: '24px', md: '32px', lg: '42x', xl: '48px' }}
           pr={'50px'}
           color={'secondary'}
           userSelect={'none'}
