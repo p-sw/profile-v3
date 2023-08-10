@@ -115,7 +115,7 @@ const Index: FC = () => {
               window.location.href = 'https://github.com/ritonis';
             }}
           >
-            Ritonis
+            Shinwoo PARK
           </Box>
           ,
           <br />a full-stack web developer.

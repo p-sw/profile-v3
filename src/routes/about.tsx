@@ -160,9 +160,6 @@ const About: FC = () => {
         <AboutItem currentIndex={currentIndex} myIndex={7}>
           React & NextJS user
         </AboutItem>
-        <AboutItem currentIndex={currentIndex} myIndex={8}>
-          Using FastAPI for backend A LOT
-        </AboutItem>
       </Flex>
     </Flex>
   );
