@@ -101,7 +101,7 @@ const About: FC = () => {
         fontWeight={'bold'}
         fontSize={{ base: '36px', md: '48px' }}
       >
-        Hello, I am Ritonis!
+        Hello, I am Shinwoo PARK!
       </Box>
       <Flex
         position="relative"
