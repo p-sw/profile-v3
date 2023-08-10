@@ -127,7 +127,7 @@ const Navigation: FC = () => {
           fontWeight={300}
           fontSize={['18px', null, '30px']}
         >
-          Ritonis
+          PSWKR
         </Link>
         {!isMobile ? (
           <Flex
