@@ -139,7 +139,7 @@ const Index: FC = () => {
           <Category
             direction={'start'}
             title={'Frontend'}
-            items={['React', 'NextJS', 'Chakra-UI', 'TailwindCSS']}
+            items={['React', 'NextJS', 'Chakra-UI', 'TailwindCSS', 'DaisyUI']}
             img={<Image src={'/frontend.png'} w={'125px'} h={'125px'} />}
           />
           <Category
